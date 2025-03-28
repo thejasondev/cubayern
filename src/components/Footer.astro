@@ -1,0 +1,85 @@
+---
+import SocialIcon from './SocialIcon.astro';
+---
+
+<footer class="bg-bayern-blue text-white">
+  <div class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
+      <div>
+        <h3 class="mb-4 text-lg font-bold">CUBAYERN</h3>
+        <p class="text-sm text-gray-300">
+          La comunidad oficial de aficionados del Bayern Munich en Cuba.
+        </p>
+      </div>
+      
+      <div>
+        <h3 class="mb-4 text-lg font-bold">Enlaces</h3>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a href="/" class="hover:text-bayern-red">
+              Inicio
+            </a>
+          </li>
+          <li>
+            <a href="/calendario" class="hover:text-bayern-red">
+              Calendario
+            </a>
+          </li>
+          <li>
+            <a href="/noticias" class="hover:text-bayern-red">
+              Noticias
+            </a>
+          </li>
+          <li>
+            <a href="/sobre-nosotros" class="hover:text-bayern-red">
+              Sobre Nosotros
+            </a>
+          </li>
+          <li>
+            <a href="/donaciones" class="hover:text-bayern-red">
+              Donaciones
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="mb-4 text-lg font-bold">Contacto</h3>
+        <ul class="space-y-2 text-sm">
+          <li>Email: cubayern@gmail.com</li>
+          <li>La Habana, Cuba</li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="mb-4 text-lg font-bold">Síguenos</h3>
+        <div class="flex space-x-4">
+          <a href="#" class="hover:text-bayern-red">
+            <SocialIcon name="facebook" />
+            <span class="sr-only">Facebook</span>
+          </a>
+          <a href="#" class="hover:text-bayern-red">
+            <SocialIcon name="x" />
+            <span class="sr-only">Twitter</span>
+          </a>
+          <a href="#" class="hover:text-bayern-red">
+            <SocialIcon name="instagram" />
+            <span class="sr-only">Instagram</span>
+          </a>
+          <a href="mailto:info@cubayern.com" class="hover:text-bayern-red">
+            <SocialIcon name="mail" />
+            <span class="sr-only">Email</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-8 border-t border-gray-700 pt-8 text-center text-sm">
+      <p>&copy; {new Date().getFullYear()} Cubayern. Todos los derechos reservados.</p>
+      <p class="mt-2 text-gray-300">
+        Cubayern está afiliado oficialmente con FC Bayern Munich.
+      </p>
+    </div>
+  </div>
+</footer>
+

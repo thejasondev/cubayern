@@ -1,6 +1,11 @@
 ---
-import "../styles/global.css";
+import Layout from '../layouts/Layout.astro';
+import HeroSection from '../components/HeroSection.astro';
 ---
-<h1 class="text-3xl font-bold underline">
-  Hello world!
-</h1>
+
+<Layout title="Inicio">
+  <main class="flex-1">
+    <HeroSection />
+  </main>
+</Layout>
+
