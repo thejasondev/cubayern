@@ -2,9 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
+  @font-face {
+    font-family: 'FC Bayern Sans';
+    src: url('/fonts/FCBayernSans.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'FC Bayern Sans';
+    src: url('/fonts/FCBayernSans-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'FC Bayern Sans';
+    src: url('/fonts/FCBayernSans-Semibold.woff2') format('woff2');
+    font-weight: 600;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'FC Bayern Sans Condensed';
+    src: url('/fonts/FCBayernSans-Cond.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'FC Bayern Sans Condensed';
+    src: url('/fonts/FCBayernSans-CondSemibold.woff2') format('woff2');
+    font-weight: 600;
+    font-display: swap;
+  }
+
+  html {
+    font-family: 'FC Bayern Sans', system-ui, sans-serif;
+  }
+  
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-gray-50 text-gray-900 font-normal;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'FC Bayern Sans', system-ui, sans-serif;
+    @apply font-semibold;
+  }
+  
+  .font-condensed {
+    font-family: 'FC Bayern Sans Condensed', system-ui, sans-serif;
   }
 }
-

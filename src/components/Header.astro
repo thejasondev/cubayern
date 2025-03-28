@@ -12,9 +12,9 @@ const navigation = [
   <div class="container mx-auto px-4">
     <div class="flex h-16 items-center justify-between">
      <div class="flex items-center">
-      <a href="/" class="flex items-center">
-       <span class="text-xl font-bold text-bayern-blue">CU</span>
-       <span class="text-xl font-bold text-bayern-red -ml-0.6">BAYERN</span>
+      <a href="/" class="flex items-center font-bold">
+       <span class="text-xl text-bayern-blue font-bayern">CU</span>
+       <span class="text-xl text-bayern-red -ml-0.6 font-bayern">BAYERN</span>
       </a>
      </div>
 
@@ -27,7 +27,7 @@ const navigation = [
             <li>
               <a 
                 href={item.href}
-                class="text-sm font-medium text-gray-700 transition-colors hover:text-bayern-red"
+                class="text-sm font-semibold text-gray-700 transition-colors hover:text-bayern-red"
               >
                 {item.name}
               </a>

@@ -7,8 +7,16 @@ export default {
         "bayern-red": "#DC052D",
         "bayern-blue": "#0066B2",
       },
+      fontFamily: {
+        bayern: ['FC Bayern Sans', 'sans-serif'],
+        'bayern-condensed': ['FC Bayern Sans Condensed', 'sans-serif']
+      },
+      fontWeight: {
+      light: 300,
+      normal: 400,
+      semibold: 600
+      },
     },
   },
   plugins: [],
 }
-
