@@ -1,0 +1,28 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<section class:list={["overflow-hidden rounded-lg bg-bayern-blue p-6 text-white", className]}>
+  <div class="md:flex md:items-center md:justify-between">
+    <div class="md:w-2/3">
+      <h2 class="text-2xl font-bold">Apoya a Cubayern</h2>
+      <p class="mt-2 text-gray-200">
+        Tu donación nos ayuda a mantener esta comunidad activa y a organizar eventos 
+        para todos los aficionados del Bayern en Cuba.
+      </p>
+    </div>
+    <div class="mt-4 md:mt-0 md:w-1/3 md:text-right">
+      <a
+        href="/donaciones"
+        class="inline-block rounded-md bg-white px-6 py-3 text-sm font-medium text-bayern-red shadow-md transition-colors hover:bg-gray-100"
+      >
+        Hacer una donación
+      </a>
+    </div>
+  </div>
+</section>
+

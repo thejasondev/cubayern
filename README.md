@@ -33,3 +33,29 @@ Para ejecutar el proyecto en tu entorno local, sigue estos pasos:
 1. **Clona el repositorio:**
    ```bash
    git clone https://github.com/thejasondev/cubayern.git
+
+```
+
+## API de Football Data
+
+Este proyecto utiliza la API de [football-data.org](https://www.football-data.org/) para mostrar información sobre partidos, clasificaciones y goleadores. 
+
+### Limitaciones
+
+La versión gratuita de la API tiene limitaciones:
+- 10 llamadas por minuto
+- Acceso limitado a algunas competiciones
+- Información limitada para algunos endpoints
+
+
+## API de Noticias
+
+Este proyecto también utiliza [The News API](https://www.thenewsapi.com/) para mostrar noticias relacionadas con el Bayern Munich.
+
+
+### Limitaciones
+
+El plan gratuito incluye:
+- 100 solicitudes por día
+- Acceso a noticias de los últimos 30 días
+- 3 llamadas por segundo

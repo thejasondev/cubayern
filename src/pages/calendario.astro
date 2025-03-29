@@ -1,0 +1,283 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TopScorers from '../components/TopScorers.astro';
+import LeagueTable from '../components/LeagueTable.astro';
+import { getBayernMatches, getCompetitionMatches, getStandings, getScorers } from '../services/footballApi';
+import type { Match } from '../services/footballApi';
+
+// Códigos de competición
+const BUNDESLIGA = 'BL1';
+const CHAMPIONS = 'CL';
+const DFB_POKAL = 'DFB';
+
+// Obtener datos de partidos del Bayern
+const bayernMatches = await getBayernMatches();
+
+// Datos para la Bundesliga
+const bundesligaStandings = await getStandings(BUNDESLIGA);
+const bundesligaScorers = await getScorers(BUNDESLIGA);
+
+// Datos para Champions League
+let championsStandings = [];
+let championsScorers = [];
+try {
+  championsStandings = await getStandings(CHAMPIONS);
+  championsScorers = await getScorers(CHAMPIONS);
+} catch (error) {
+  console.error('Error al cargar datos de Champions League:', error);
+}
+
+// Convertir fechas a meses para filtro
+const months = [...new Set(
+  bayernMatches.map((match: Match) => {
+    const date = new Date(match.utcDate);
+    return date.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+  })
+)].sort((a, b) => {
+  // Ordenar meses cronológicamente
+  const monthA = String(a);
+  const monthB = String(b);
+  const dateA = new Date(monthA.split(' ')[0] + ' 1, ' + monthA.split(' ')[1]);
+  const dateB = new Date(monthB.split(' ')[0] + ' 1, ' + monthB.split(' ')[1]);
+  return dateA.getTime() - dateB.getTime();
+});
+
+// Formatear partidos para la tabla
+const formatMatches = (matches: Match[]) => {
+  return matches.map((match: Match) => {
+    // Convertir fecha UTC a local
+    const date = new Date(match.utcDate);
+    
+    return {
+      id: match.id,
+      date: date.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' }),
+      time: date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
+      competition: match.competition.name,
+      competitionCode: match.competition.code,
+      home: match.homeTeam.shortName || match.homeTeam.name,
+      away: match.awayTeam.shortName || match.awayTeam.name,
+      homeId: match.homeTeam.id,
+      awayId: match.awayTeam.id,
+      venue: match.venue || (match.homeTeam.name === 'FC Bayern München' ? 'Allianz Arena' : 'Visitante'),
+      result: match.status === 'FINISHED' ? 
+        `${match.score.fullTime.home || 0} - ${match.score.fullTime.away || 0}` : null,
+      status: match.status
+    };
+  });
+};
+
+const matches = formatMatches(bayernMatches);
+---
+
+<Layout title="Calendario">
+  <main class="flex-1">
+    <div class="bg-bayern-red py-12 text-white">
+      <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold md:text-4xl">Calendario</h1>
+        <p class="mt-2">
+          Consulta todos los partidos del Bayern Munich en la temporada actual.
+        </p>
+      </div>
+    </div>
+    
+    <div class="container mx-auto px-4 py-8">
+      <!-- Filtros -->
+      <div class="mb-8 flex flex-wrap gap-4">
+        <div>
+          <label for="month" class="mb-1 block text-sm font-medium text-gray-700">
+            Mes
+          </label>
+          <select
+            id="month"
+            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+          >
+            <option value="all">Todos los meses</option>
+            {months.map((month) => (
+              <option value={String(month)}>
+                {String(month)}
+              </option>
+            ))}
+          </select>
+        </div>
+        
+        <div>
+          <label for="competition" class="mb-1 block text-sm font-medium text-gray-700">
+            Competición
+          </label>
+          <select
+            id="competition"
+            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+          >
+            <option value="all" selected>Todas</option>
+            <option value="BL1">Bundesliga</option>
+            <option value="CL">Champions League</option>
+            <option value="DFB">DFB-Pokal</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- Tabla de partidos -->
+      <div class="overflow-x-auto mb-10">
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="border-b border-gray-200 text-left">
+              <th class="px-4 py-3 text-sm font-medium text-gray-500">Fecha</th>
+              <th class="px-4 py-3 text-sm font-medium text-gray-500">Competición</th>
+              <th class="px-4 py-3 text-sm font-medium text-gray-500">Partido</th>
+              <th class="px-4 py-3 text-sm font-medium text-gray-500">Estadio</th>
+              <th class="px-4 py-3 text-sm font-medium text-gray-500">Resultado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {matches.map((match) => (
+              <tr class="border-b border-gray-200 match-row" data-competition={match.competitionCode}>
+                <td class="whitespace-nowrap px-4 py-4">
+                  <div class="font-medium">{match.date}</div>
+                  <div class="text-sm text-gray-500">{match.time}</div>
+                </td>
+                <td class="whitespace-nowrap px-4 py-4">
+                  <span class="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium">
+                    {match.competition}
+                  </span>
+                </td>
+                <td class="px-4 py-4">
+                  <div class="flex items-center gap-2">
+                    <span class={match.homeId === 5 ? "font-bold text-bayern-red" : ""}>
+                      {match.home}
+                    </span>
+                    <span class="text-xs font-bold">vs</span>
+                    <span class={match.awayId === 5 ? "font-bold text-bayern-red" : ""}>
+                      {match.away}
+                    </span>
+                  </div>
+                </td>
+                <td class="px-4 py-4 text-sm">{match.venue}</td>
+                <td class="px-4 py-4">
+                  {match.result ? (
+                    <span class="font-medium">{match.result}</span>
+                  ) : (
+                    <span class="text-sm text-gray-500">Próximamente</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Mensaje cuando no hay partidos -->
+      <div id="no-matches-message" class="hidden mb-10 text-center py-8 rounded-lg border bg-white shadow-sm">
+        <p class="text-gray-500">No hay partidos que mostrar con los filtros seleccionados</p>
+      </div>
+
+      <!-- Sección de estadísticas -->
+      <div id="stats-container" class="grid grid-cols-1 gap-8 lg:grid-cols-2 mb-10">
+        <!-- Bundesliga -->
+        <div class="stats-panel" data-competition="BL1">
+          <LeagueTable standings={bundesligaStandings} competition="Bundesliga" />
+        </div>
+        <div class="stats-panel" data-competition="BL1">
+          <TopScorers scorers={bundesligaScorers} competition="Bundesliga" />
+        </div>
+        
+        <!-- Champions League -->
+        <div class="stats-panel hidden" data-competition="CL">
+          {championsStandings.length > 0 ? (
+            <LeagueTable standings={championsStandings} competition="Champions League" />
+          ) : (
+            <div class="rounded-lg border bg-white p-4 shadow-sm">
+              <div class="text-center py-8">
+                <p class="text-gray-500">Datos de clasificación no disponibles para Champions League</p>
+              </div>
+            </div>
+          )}
+        </div>
+        <div class="stats-panel hidden" data-competition="CL">
+          {championsScorers.length > 0 ? (
+            <TopScorers scorers={championsScorers} competition="Champions League" />
+          ) : (
+            <div class="rounded-lg border bg-white p-4 shadow-sm">
+              <div class="text-center py-8">
+                <p class="text-gray-500">Datos de goleadores no disponibles para Champions League</p>
+              </div>
+            </div>
+          )}
+        </div>
+        
+        <!-- DFB-Pokal (Sin datos, solo muestra mensaje) -->
+        <div class="stats-panel hidden" data-competition="DFB">
+          <div class="rounded-lg border bg-white p-4 shadow-sm">
+            <div class="text-center py-8">
+              <p class="text-gray-500">Datos de clasificación no disponibles para DFB-Pokal</p>
+            </div>
+          </div>
+        </div>
+        <div class="stats-panel hidden" data-competition="DFB">
+          <div class="rounded-lg border bg-white p-4 shadow-sm">
+            <div class="text-center py-8">
+              <p class="text-gray-500">Datos de goleadores no disponibles para DFB-Pokal</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  // Filtrar partidos por mes y competición
+  document.addEventListener('DOMContentLoaded', () => {
+    const monthSelect = document.getElementById('month') as HTMLSelectElement;
+    const competitionSelect = document.getElementById('competition') as HTMLSelectElement;
+    const matchRows = document.querySelectorAll('.match-row');
+    const statsPanels = document.querySelectorAll('.stats-panel');
+    
+    const filterMatches = () => {
+      const selectedMonth = monthSelect.value;
+      const selectedCompetition = competitionSelect.value;
+      
+      // Filtrar partidos
+      let visibleMatches = 0;
+      matchRows.forEach(row => {
+        const dateText = row.querySelector('td:first-child div:first-child')?.textContent || '';
+        const competitionCode = (row as HTMLElement).dataset.competition || '';
+        
+        const monthMatches = selectedMonth === 'all' || dateText.includes(selectedMonth);
+        const competitionMatches = selectedCompetition === 'all' || competitionCode === selectedCompetition;
+        
+        if (row instanceof HTMLElement) {
+          const shouldShow = monthMatches && competitionMatches;
+          row.style.display = shouldShow ? '' : 'none';
+          if (shouldShow) visibleMatches++;
+        }
+      });
+      
+      // Mostrar u ocultar el mensaje de "no hay partidos"
+      const noMatchesMessage = document.getElementById('no-matches-message');
+      if (noMatchesMessage) {
+        noMatchesMessage.style.display = visibleMatches === 0 ? 'block' : 'none';
+      }
+      
+      // Mostrar paneles de estadísticas según la competición seleccionada
+      statsPanels.forEach(panel => {
+        const panelCompetition = (panel as HTMLElement).dataset.competition || '';
+        if (panel instanceof HTMLElement) {
+          if (selectedCompetition === 'all') {
+            // Con "Todas" seleccionado, mostrar solo estadísticas de Bundesliga
+            panel.style.display = panelCompetition === 'BL1' ? '' : 'none';
+          } else {
+            panel.style.display = panelCompetition === selectedCompetition ? '' : 'none';
+          }
+        }
+      });
+    };
+    
+    // Ejecutar al cargar la página
+    filterMatches();
+    
+    // Asignar eventos de cambio
+    monthSelect.addEventListener('change', filterMatches);
+    competitionSelect.addEventListener('change', filterMatches);
+  });
+</script>
+

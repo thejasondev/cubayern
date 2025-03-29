@@ -1,0 +1,110 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Donaciones">
+  <main class="flex-1">
+    <div class="bg-bayern-red py-12 text-white">
+      <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold md:text-4xl">Donaciones</h1>
+        <p class="mt-2">
+          Apoya a nuestra comunidad para seguir creciendo juntos.
+        </p>
+      </div>
+    </div>
+    
+    <div class="container mx-auto px-4 py-8">
+      <div class="mx-auto max-w-3xl">
+        <div class="mb-8 rounded-lg bg-white p-6 shadow-sm">
+          <h2 class="mb-4 text-2xl font-bold text-gray-900">¿Por qué donar a Cubayern?</h2>
+          <p class="text-gray-700">
+            Cubayern es una iniciativa sin fines de lucro que busca unir a los aficionados del Bayern Munich en Cuba. 
+            Tus donaciones nos ayudan a:
+          </p>
+          <ul class="mt-4 list-inside list-disc space-y-2 text-gray-700">
+            <li>Mantener este sitio web y nuestras redes sociales activas.</li>
+            <li>Organizar eventos para ver partidos en comunidad.</li>
+            <li>Crear contenido exclusivo sobre el Bayern Munich.</li>
+            <li>Adquirir equipamiento para nuestras actividades.</li>
+            <li>Establecer conexiones con otras peñas internacionales.</li>
+          </ul>
+        </div>
+        
+        <div class="grid gap-6 md:grid-cols-2">
+          <div class="rounded-lg bg-white p-6 shadow-sm">
+            <h3 class="mb-4 text-xl font-bold text-gray-900">Donación Única</h3>
+            <p class="mb-4 text-gray-700">
+              Realiza una donación puntual del monto que desees para apoyar nuestras actividades.
+            </p>
+            <div class="mb-4 grid grid-cols-3 gap-2">
+              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+                $50
+              </button>
+              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+                $100
+              </button>
+              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+                $250
+              </button>
+              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+                $500
+              </button>
+              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+                $1000
+              </button>
+              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+                Otro
+              </button>
+            </div>
+            <button class="w-full rounded-md bg-bayern-red px-4 py-2 font-medium text-white hover:bg-bayern-red/90">
+              Donar Ahora
+            </button>
+          </div>
+          
+          <div class="rounded-lg bg-white p-6 shadow-sm">
+            <h3 class="mb-4 text-xl font-bold text-gray-900">Donación Mensual</h3>
+            <p class="mb-4 text-gray-700">
+              Conviértete en miembro y apoya a Cubayern con una donación mensual recurrente.
+            </p>
+            <div class="mb-4 grid grid-cols-3 gap-2">
+              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+                $25/mes
+              </button>
+              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+                $50/mes
+              </button>
+              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+                $100/mes
+              </button>
+            </div>
+            <button class="w-full rounded-md bg-bayern-blue px-4 py-2 font-medium text-white hover:bg-bayern-blue/90">
+              Hacerme Miembro
+            </button>
+          </div>
+        </div>
+        
+        <div class="mt-8 rounded-lg bg-white p-6 shadow-sm">
+          <h3 class="mb-4 text-xl font-bold text-gray-900">Otras Formas de Apoyar</h3>
+          <p class="text-gray-700">
+            Si no puedes realizar una donación monetaria, hay otras formas de apoyar a Cubayern:
+          </p>
+          <ul class="mt-4 list-inside list-disc space-y-2 text-gray-700">
+            <li>Comparte nuestro contenido en redes sociales.</li>
+            <li>Participa en nuestros eventos y actividades.</li>
+            <li>Contribuye con ideas y sugerencias para mejorar la comunidad.</li>
+            <li>Ayúdanos a crear contenido sobre el Bayern Munich.</li>
+          </ul>
+          <div class="mt-6">
+            <a
+              href="#"
+              class="inline-block rounded-md bg-gray-100 px-6 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
+            >
+              Contactar con Nosotros
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+

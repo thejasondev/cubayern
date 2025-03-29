@@ -1,0 +1,63 @@
+---
+import type { Standing } from '../services/footballApi';
+
+interface Props {
+  standings: Standing[];
+  competition: string;
+}
+
+const { standings, competition } = Astro.props;
+---
+
+<section class="rounded-lg border bg-white p-4 shadow-sm">
+  <div class="mb-4 flex items-center justify-between">
+    <h2 class="text-lg font-bold text-gray-900">Clasificación ({competition})</h2>
+  </div>
+  
+  <div class="overflow-x-auto">
+    <table class="w-full">
+      <thead>
+        <tr class="border-b border-gray-200 text-left">
+          <th class="px-2 py-2 text-sm font-medium text-gray-500">Pos</th>
+          <th class="px-2 py-2 text-sm font-medium text-gray-500">Equipo</th>
+          <th class="px-2 py-2 text-sm font-medium text-gray-500 text-center">PJ</th>
+          <th class="px-2 py-2 text-sm font-medium text-gray-500 text-center">G</th>
+          <th class="px-2 py-2 text-sm font-medium text-gray-500 text-center">E</th>
+          <th class="px-2 py-2 text-sm font-medium text-gray-500 text-center">P</th>
+          <th class="px-2 py-2 text-sm font-medium text-gray-500 text-center">GF</th>
+          <th class="px-2 py-2 text-sm font-medium text-gray-500 text-center">GC</th>
+          <th class="px-2 py-2 text-sm font-medium text-gray-500 text-center">DG</th>
+          <th class="px-2 py-2 text-sm font-medium text-gray-500 text-center">Pts</th>
+        </tr>
+      </thead>
+      <tbody>
+        {standings.map((standing) => (
+          <tr class={`border-b border-gray-200 ${standing.team.name === 'FC Bayern München' ? 'bg-bayern-red/5' : ''}`}>
+            <td class="px-2 py-3 text-sm">{standing.position}</td>
+            <td class="px-2 py-3">
+              <div class="flex items-center">
+                <img
+                  src={standing.team.crest}
+                  alt={standing.team.name}
+                  class="mr-2 h-5 w-5"
+                  onerror="this.onerror=null; this.src='/placeholder-team.svg';"
+                />
+                <span class={`text-sm ${standing.team.name === 'FC Bayern München' ? 'font-bold text-bayern-red' : ''}`}>
+                  {standing.team.shortName || standing.team.name}
+                </span>
+              </div>
+            </td>
+            <td class="px-2 py-3 text-center text-sm">{standing.playedGames}</td>
+            <td class="px-2 py-3 text-center text-sm">{standing.won}</td>
+            <td class="px-2 py-3 text-center text-sm">{standing.draw}</td>
+            <td class="px-2 py-3 text-center text-sm">{standing.lost}</td>
+            <td class="px-2 py-3 text-center text-sm">{standing.goalsFor}</td>
+            <td class="px-2 py-3 text-center text-sm">{standing.goalsAgainst}</td>
+            <td class="px-2 py-3 text-center text-sm">{standing.goalDifference}</td>
+            <td class="px-2 py-3 text-center text-sm font-bold">{standing.points}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section> 

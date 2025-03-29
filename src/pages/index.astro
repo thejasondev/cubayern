@@ -1,11 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import HeroSection from '../components/HeroSection.astro';
+import CalendarPreview from '../components/CalendarPreview.astro';
+import NewsPreview from '../components/NewsPreview.astro';
+import AboutPreview from '../components/AboutPreview.astro';
+import DonationBanner from '../components/DonationBanner.astro';
 ---
 
 <Layout title="Inicio">
   <main class="flex-1">
     <HeroSection />
+    <div class="container mx-auto px-4 py-8 md:py-12">
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        <div class="lg:col-span-2">
+          <NewsPreview />
+        </div>
+        <div class="space-y-8">
+          <CalendarPreview />
+          <AboutPreview />
+        </div>
+      </div>
+      <DonationBanner class="mt-12" />
+    </div>
   </main>
 </Layout>
 

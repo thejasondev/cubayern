@@ -1,0 +1,79 @@
+---
+import type { Match } from '../services/footballApi';
+import { getBayernMatches } from '../services/footballApi';
+
+function formatShortDate(dateString: string) {
+  return new Date(dateString).toLocaleDateString('es-ES', {
+    month: 'short',
+    day: 'numeric',
+  });
+}
+
+function formatTime(dateString: string) {
+  return new Date(dateString).toLocaleTimeString('es-ES', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
+// Obtener próximos partidos del Bayern (limitado a 3 partidos para mostrar dependiendo del tamaño de pantalla)
+const allMatches = await getBayernMatches();
+
+// Filtrar por partidos programados y ordenar por fecha
+const sortedMatches = allMatches
+  .filter((match: Match) => match.status === 'SCHEDULED')
+  .sort((a: Match, b: Match) => new Date(a.utcDate).getTime() - new Date(b.utcDate).getTime());
+
+// Tomar los primeros 3 partidos para diferentes tamaños de pantalla
+const bayernMatches = sortedMatches.slice(0, 3);
+---
+
+<section class="rounded-lg border bg-white p-4 shadow-sm">
+  <div class="mb-4 flex items-center justify-between">
+    <h2 class="text-lg font-bold text-gray-900">Próximos Partidos</h2>
+    <a href="/calendario" class="text-xs font-medium text-bayern-red hover:underline">
+      Ver calendario
+    </a>
+  </div>
+  
+  <div class="space-y-4">
+    {bayernMatches.length > 0 ? (
+      bayernMatches.map((match: Match, index: number) => (
+        <div class={`rounded-md border border-gray-200 p-3 ${index > 0 ? 'hidden md:block' : ''} ${index > 1 ? 'lg:block hidden' : ''}`}>
+          <div class="text-xs font-medium text-gray-500">{match.competition.name}</div>
+          <div class="mt-1 flex items-center justify-between">
+            <div class="font-medium">
+              {match.homeTeam.name === "FC Bayern München" ? (
+                <span class="font-bold text-bayern-red">{match.homeTeam.shortName || match.homeTeam.name}</span>
+              ) : (
+                match.homeTeam.shortName || match.homeTeam.name
+              )}
+            </div>
+            <div class="text-xs font-bold">VS</div>
+            <div class="font-medium text-right">
+              {match.awayTeam.name === "FC Bayern München" ? (
+                <span class="font-bold text-bayern-red">{match.awayTeam.shortName || match.awayTeam.name}</span>
+              ) : (
+                match.awayTeam.shortName || match.awayTeam.name
+              )}
+            </div>
+          </div>
+          <div class="mt-2 flex items-center justify-between text-xs text-gray-500">
+            <div>
+              {formatShortDate(match.utcDate)}
+            </div>
+            <div>
+              {formatTime(match.utcDate)}
+            </div>
+            <div>{match.venue || 'Por confirmar'}</div>
+          </div>
+        </div>
+      ))
+    ) : (
+      <div class="rounded-md border border-gray-200 p-3 text-center">
+        <p class="text-sm text-gray-500">No hay próximos partidos programados</p>
+      </div>
+    )}
+  </div>
+</section>
+

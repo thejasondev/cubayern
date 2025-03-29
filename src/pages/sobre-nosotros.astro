@@ -1,0 +1,114 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Sobre Nosotros">
+  <main class="flex-1">
+    <div class="bg-bayern-red py-12 text-white">
+      <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold md:text-4xl">Sobre Nosotros</h1>
+        <p class="mt-2">
+          Conoce más sobre la comunidad Cubayern y nuestra misión.
+        </p>
+      </div>
+    </div>
+    
+    <div class="container mx-auto px-4 py-8">
+      <div class="mx-auto max-w-3xl">
+        <div class="mb-8 overflow-hidden rounded-lg">
+          <img
+            src="/cubayern.jpg?height=400&width=800"
+            alt="Miembros de Cubayern"
+            class="h-full w-full object-cover"
+          />
+        </div>
+        
+        <div class="space-y-6">
+          <section>
+            <h2 class="mb-4 text-2xl font-bold text-gray-900">Nuestra Historia</h2>
+            <p class="text-gray-700">
+              Cubayern nació en 2014 como una iniciativa de un grupo de amigos apasionados por el Bayern Munich. 
+              Lo que comenzó como un pequeño grupo de aficionados en la capital cubana se ha convertido en una comunidad en crecimiento 
+              que reúne a aficionados de toda Cuba.
+            </p>
+            <p class="mt-4 text-gray-700">
+              Nuestra pasión por el club bávaro nos ha llevado a crear este espacio digital donde podemos 
+              compartir noticias, análisis, y organizar eventos para ver los partidos juntos.
+            </p>
+          </section>
+          
+          <section>
+            <h2 class="mb-4 text-2xl font-bold text-gray-900">Nuestra Misión</h2>
+            <p class="text-gray-700">
+              En Cubayern, nos dedicamos a:
+            </p>
+            <ul class="mt-4 list-inside list-disc space-y-2 text-gray-700">
+              <li>Crear una comunidad unida de aficionados del Bayern Munich en Cuba.</li>
+              <li>Proporcionar información actualizada y de calidad sobre el club.</li>
+              <li>Organizar eventos para ver partidos y celebrar los éxitos del equipo.</li>
+              <li>Establecer conexiones con otras peñas del Bayern alrededor del mundo.</li>
+              <li>Promover los valores del club: tradición, respeto y excelencia.</li>
+            </ul>
+          </section>
+          
+          <section>
+            <h2 class="mb-4 text-2xl font-bold text-gray-900">Nuestro Equipo</h2>
+            <div class="grid gap-6 md:grid-cols-3">
+              <div class="text-center">
+                <div class="mx-auto h-32 w-32 overflow-hidden rounded-full">
+                  <img
+                    src="/placeholder.svg?height=128&width=128"
+                    alt="Carlos Rodríguez"
+                    class="h-full w-full object-cover"
+                  />
+                </div>
+                <h3 class="mt-4 font-bold">Carlos Rodríguez</h3>
+                <p class="text-sm text-gray-500">Fundador y Presidente</p>
+              </div>
+              <div class="text-center">
+                <div class="mx-auto h-32 w-32 overflow-hidden rounded-full">
+                  <img
+                    src="/placeholder.svg?height=128&width=128"
+                    alt="María González"
+                    class="h-full w-full object-cover"
+                  />
+                </div>
+                <h3 class="mt-4 font-bold">María González</h3>
+                <p class="text-sm text-gray-500">Coordinadora de Eventos</p>
+              </div>
+              <div class="text-center">
+                <div class="mx-auto h-32 w-32 overflow-hidden rounded-full">
+                  <img
+                    src="/placeholder.svg?height=128&width=128"
+                    alt="Javier Pérez"
+                    class="h-full w-full object-cover"
+                  />
+                </div>
+                <h3 class="mt-4 font-bold">Javier Pérez</h3>
+                <p class="text-sm text-gray-500">Secretario General</p>
+              </div>
+            </div>
+          </section>
+          
+          <section>
+            <h2 class="mb-4 text-2xl font-bold text-gray-900">Únete a Nosotros</h2>
+            <p class="text-gray-700">
+              Si eres aficionado del Bayern Munich y vives en Cuba, nos encantaría que formaras parte 
+              de nuestra comunidad. Puedes seguirnos en nuestras redes sociales y participar en 
+              nuestros eventos.
+            </p>
+            <div class="mt-6">
+              <a
+                href="#"
+                class="inline-block rounded-md bg-bayern-red px-6 py-3 text-sm font-medium text-white shadow-md transition-colors hover:bg-bayern-red/90"
+              >
+                Contactar con Nosotros
+              </a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+

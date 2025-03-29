@@ -1,0 +1,54 @@
+---
+import type { Scorer } from '../services/footballApi';
+
+interface Props {
+  scorers: Scorer[];
+  competition: string;
+}
+
+const { scorers, competition } = Astro.props;
+---
+
+<section class="rounded-lg border bg-white p-4 shadow-sm">
+  <div class="mb-4 flex items-center justify-between">
+    <h2 class="text-lg font-bold text-gray-900">Máximos Goleadores ({competition})</h2>
+  </div>
+  
+  <div class="overflow-x-auto">
+    <table class="w-full">
+      <thead>
+        <tr class="border-b border-gray-200 text-left">
+          <th class="px-4 py-2 text-sm font-medium text-gray-500">Pos</th>
+          <th class="px-4 py-2 text-sm font-medium text-gray-500">Jugador</th>
+          <th class="px-4 py-2 text-sm font-medium text-gray-500">Equipo</th>
+          <th class="px-4 py-2 text-sm font-medium text-gray-500 text-center">Goles</th>
+          <th class="px-4 py-2 text-sm font-medium text-gray-500 text-center">Asistencias</th>
+        </tr>
+      </thead>
+      <tbody>
+        {scorers.map((scorer, index) => (
+          <tr class="border-b border-gray-200">
+            <td class="px-4 py-3 text-sm">{index + 1}</td>
+            <td class="px-4 py-3">
+              <div class="font-medium">{scorer.player.name}</div>
+              <div class="text-xs text-gray-500">{scorer.player.nationality}</div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <img
+                  src={scorer.team.crest}
+                  alt={scorer.team.name}
+                  class="mr-2 h-5 w-5"
+                  onerror="this.onerror=null; this.src='/placeholder-team.svg';"
+                />
+                <span class="text-sm">{scorer.team.shortName || scorer.team.name}</span>
+              </div>
+            </td>
+            <td class="px-4 py-3 text-center font-bold">{scorer.goals}</td>
+            <td class="px-4 py-3 text-center text-gray-600">{scorer.assists || "-"}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section> 
