@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import TopScorers from '../components/TopScorers.astro';
 import LeagueTable from '../components/LeagueTable.astro';
 import { getBayernMatches, getCompetitionMatches, getStandings, getScorers } from '../services/footballApi';
-import type { Match } from '../services/footballApi';
+import type Match from '../interfaces/match.interface';
 
 // Códigos de competición
 const BUNDESLIGA = 'BL1';
