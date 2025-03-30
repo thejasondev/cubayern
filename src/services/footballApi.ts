@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type Match from '../interfaces/match.interface';
 
 const footballApi = axios.create({
   baseURL: 'https://api.football-data.org/v4',
@@ -10,11 +11,38 @@ const footballApi = axios.create({
 export async function getBayernMatches() {
   try {
     // ID del equipo del Bayern Munich es 5 (FC Bayern München)
+    // Obtener todos los partidos (SCHEDULED, LIVE, FINISHED)
     const response = await footballApi.get('/teams/5/matches');
+    
+    if (!response.data || !response.data.matches) {
+      console.error('No se encontraron partidos para el Bayern Munich');
+      return [];
+    }
+    
+    // Si no hay partidos SCHEDULED, probar con ID alternativo 27 (Bayern Munich)
+    if (!response.data.matches.some((match: Match) => match.status === 'SCHEDULED')) {
+      try {
+        const altResponse = await footballApi.get('/teams/27/matches');
+        if (altResponse.data && altResponse.data.matches) {
+          return altResponse.data.matches;
+        }
+      } catch (altError) {
+        console.error('Error al intentar con ID alternativo:', altError);
+      }
+    }
+    
     return response.data.matches;
   } catch (error) {
     console.error('Error al obtener los partidos del Bayern:', error);
-    return [];
+    
+    // Intenta con un ID alternativo como respaldo
+    try {
+      const altResponse = await footballApi.get('/teams/27/matches');
+      return altResponse.data.matches;
+    } catch (altError) {
+      console.error('Error también con ID alternativo:', altError);
+      return [];
+    }
   }
 }
 
