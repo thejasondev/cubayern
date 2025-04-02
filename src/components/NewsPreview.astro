@@ -2,7 +2,7 @@
 import type { NewsArticle } from '../services/newsApi';
 import { getBayernNews } from '../services/newsApi';
 
-function formatDate(dateString: string) {
+export function formatDate(dateString: string) {
   const date = new Date(dateString);
   return date.toLocaleDateString('es-ES', {
     day: 'numeric',
