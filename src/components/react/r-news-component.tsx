@@ -40,7 +40,9 @@ const ReactNewsPreview = () => {
             </a>
          </div>
          {loading ? (
-                  <div className="inline-block animate-spin rounded-full h-5 w-5 border-2 border-bayern-red border-t-transparent mr-2" />
+            <div className="flex justify-center p-5">
+               <div className="inline-block animate-spin rounded-full h-5 w-5 border-2 border-bayern-red border-t-transparent mr-2" />
+            </div>
                ) : data.length > 0 ? (
                   <div className="space-y-6 md:space-y-0 md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3">
                      {data.map((article, index) => (
