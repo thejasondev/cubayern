@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 import { getBayernNews, type NewsArticle } from "../../services/newsApi";
-import { formatDate } from "../NewsPreview.astro";
+
+
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('es-ES', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  });
+}
 
 const ReactNewsPreview = () => {
    const [data, setData] = useState<NewsArticle[]>([]);
@@ -15,9 +24,8 @@ const ReactNewsPreview = () => {
             //      "x-api-key": `${apiKey}`
             //    },
             // });
-
             // const allNews = await response.json().then((res) => res.articles);
-            const allNews = await getBayernNews(4);
+            const allNews = await getBayernNews(6);
             setData(allNews);
          } catch (error) {
             setData([]);

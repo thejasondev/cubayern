@@ -1,8 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import HeroSection from '../components/HeroSection.astro';
-import CalendarPreview from '../components/CalendarPreview.astro';
-import NewsPreview from '../components/NewsPreview.astro';
+import ReactMatchPreview from '../components/react/r-matches-component';
 import AboutPreview from '../components/AboutPreview.astro';
 import DonationBanner from '../components/DonationBanner.astro';
 import ReactNewsPreview from '../components/react/r-news-component';
@@ -18,7 +17,7 @@ import ReactNewsPreview from '../components/react/r-news-component';
           <ReactNewsPreview client:load/>
         </div>
         <div class="space-y-8">
-          <CalendarPreview />
+          <ReactMatchPreview client:load />
           <AboutPreview />
         </div>
       </div>
