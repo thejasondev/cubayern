@@ -47,9 +47,9 @@ const matchNews = await getNewsByCategory('match report', 3);
                       alt={article.title}
                       class="h-full w-full object-cover"
                       onerror="this.onerror=null; this.src='/placeholder-news.svg';"
-                    />
-                  </div>
-                  <div class="p-4">
+              />
+            </div>
+            <div class="p-4">
                     <h3 class="line-clamp-2 text-lg font-semibold text-gray-900 hover:text-bayern-red">
                       {article.title}
                     </h3>
@@ -60,11 +60,11 @@ const matchNews = await getNewsByCategory('match report', 3);
                       <span class="text-xs text-gray-500">{formatDate(article.published_at)}</span>
                       <span class="text-xs font-medium text-gray-700">{article.source}</span>
                     </div>
-                  </div>
-                </a>
               </div>
-            ))}
-          </div>
+              </a>
+            </div>
+        ))}
+      </div>
         </div>
       )}
       

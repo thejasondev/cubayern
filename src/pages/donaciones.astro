@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const whatsappNumber = "+5353118193";
+const numeroCuenta = "1234-5678-9101-1121";
 ---
 
 <Layout title="Donaciones">
@@ -37,26 +40,27 @@ import Layout from '../layouts/Layout.astro';
               Realiza una donación puntual del monto que desees para apoyar nuestras actividades.
             </p>
             <div class="mb-4 grid grid-cols-3 gap-2">
-              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+              <button class="donation-amount rounded-md border border-gray-300 px-4 py-2 text-center font-medium" data-amount="50">
                 $50
               </button>
-              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+              <button class="donation-amount rounded-md border border-gray-300 px-4 py-2 text-center font-medium" data-amount="100">
                 $100
               </button>
-              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+              <button class="donation-amount rounded-md border border-gray-300 px-4 py-2 text-center font-medium" data-amount="250">
                 $250
               </button>
-              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+              <button class="donation-amount rounded-md border border-gray-300 px-4 py-2 text-center font-medium" data-amount="500">
                 $500
               </button>
-              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+              <button class="donation-amount rounded-md border border-gray-300 px-4 py-2 text-center font-medium" data-amount="1000">
                 $1000
               </button>
-              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+              <button id="other-amount" class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium">
                 Otro
               </button>
             </div>
-            <button class="w-full rounded-md bg-bayern-red px-4 py-2 font-medium text-white hover:bg-bayern-red/90">
+            <input id="custom-amount" type="number" placeholder="Ingresa monto personalizado" class="mb-4 w-full rounded-md border border-gray-300 px-3 py-2 hidden">
+            <button id="donate-now" class="w-full rounded-md bg-gray-400 px-4 py-2 font-medium text-white hover:bg-bayern-red/90 cursor-not-allowed">
               Donar Ahora
             </button>
           </div>
@@ -67,17 +71,17 @@ import Layout from '../layouts/Layout.astro';
               Conviértete en miembro y apoya a Cubayern con una donación mensual recurrente.
             </p>
             <div class="mb-4 grid grid-cols-3 gap-2">
-              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+              <button class="membership-amount rounded-md border border-gray-300 px-4 py-2 text-center font-medium" data-amount="25">
                 $25/mes
               </button>
-              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+              <button class="membership-amount rounded-md border border-gray-300 px-4 py-2 text-center font-medium" data-amount="50">
                 $50/mes
               </button>
-              <button class="rounded-md border border-gray-300 px-4 py-2 text-center font-medium hover:bg-gray-50">
+              <button class="membership-amount rounded-md border border-gray-300 px-4 py-2 text-center font-medium" data-amount="100">
                 $100/mes
               </button>
             </div>
-            <button class="w-full rounded-md bg-bayern-blue px-4 py-2 font-medium text-white hover:bg-bayern-blue/90">
+            <button id="become-member" class="w-full rounded-md bg-gray-400 px-4 py-2 font-medium text-white hover:bg-bayern-blue/90 cursor-not-allowed">
               Hacerme Miembro
             </button>
           </div>
@@ -96,7 +100,8 @@ import Layout from '../layouts/Layout.astro';
           </ul>
           <div class="mt-6">
             <a
-              href="#"
+              href={`https://wa.me/${whatsappNumber}?text=Hola,%20me%20gustaría%20conocer%20más%20sobre%20Cubayern`}
+              target="_blank"
               class="inline-block rounded-md bg-gray-100 px-6 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
             >
               Contactar con Nosotros
@@ -108,3 +113,240 @@ import Layout from '../layouts/Layout.astro';
   </main>
 </Layout>
 
+<script is:inline define:vars={{ whatsappNumber, numeroCuenta }}>
+  // Configurar variables de estado
+  let selectedDonationAmount = 0;
+  let selectedMembershipAmount = 0;
+  
+  // Esperar a que el DOM esté cargado
+  document.addEventListener('DOMContentLoaded', () => {
+    // Referencias a elementos del DOM
+    const donationButtons = document.querySelectorAll('.donation-amount');
+    const membershipButtons = document.querySelectorAll('.membership-amount');
+    const otherAmountButton = document.getElementById('other-amount');
+    const customAmountInput = document.getElementById('custom-amount');
+    const donateNowButton = document.getElementById('donate-now');
+    const becomeMemberButton = document.getElementById('become-member');
+    
+    
+    donationButtons.forEach(button => {
+      
+      button.addEventListener('mouseenter', () => {
+        if (!button.classList.contains('bg-bayern-red')) {
+          button.classList.add('bg-gray-50');
+        }
+      });
+      
+      button.addEventListener('mouseleave', () => {
+        if (!button.classList.contains('bg-bayern-red')) {
+          button.classList.remove('bg-gray-50');
+        }
+      });
+    });
+    
+    
+    membershipButtons.forEach(button => {
+      
+      button.addEventListener('mouseenter', () => {
+        if (!button.classList.contains('bg-bayern-blue')) {
+          button.classList.add('bg-gray-50');
+        }
+      });
+      
+      button.addEventListener('mouseleave', () => {
+        if (!button.classList.contains('bg-bayern-blue')) {
+          button.classList.remove('bg-gray-50');
+        }
+      });
+    });
+    
+
+    otherAmountButton.addEventListener('mouseenter', () => {
+      if (!otherAmountButton.classList.contains('bg-bayern-red')) {
+        otherAmountButton.classList.add('bg-gray-50');
+      }
+    });
+    
+    otherAmountButton.addEventListener('mouseleave', () => {
+      if (!otherAmountButton.classList.contains('bg-bayern-red')) {
+        otherAmountButton.classList.remove('bg-gray-50');
+      }
+    });
+    
+  
+    function toggleDonationButtonSelection(clickedButton) {
+   
+      const isAlreadySelected = clickedButton.classList.contains('bg-bayern-red');
+      
+      
+      donationButtons.forEach(btn => {
+        btn.classList.remove('bg-bayern-red');
+        btn.classList.remove('text-white');
+        btn.classList.remove('border-bayern-red');
+        btn.classList.remove('bg-gray-50');
+      });
+      
+      
+      if (isAlreadySelected) {
+        return 0;
+      }
+      
+      
+      clickedButton.classList.add('bg-bayern-red');
+      clickedButton.classList.add('text-white');
+      clickedButton.classList.add('border-bayern-red');
+      return parseInt(clickedButton.getAttribute('data-amount') || '0');
+    }
+    
+    
+    function toggleMembershipButtonSelection(clickedButton) {
+      
+      const isAlreadySelected = clickedButton.classList.contains('bg-bayern-blue');
+      
+     
+      membershipButtons.forEach(btn => {
+        btn.classList.remove('bg-bayern-blue');
+        btn.classList.remove('text-white');
+        btn.classList.remove('border-bayern-blue');
+        btn.classList.remove('bg-gray-50');
+      });
+      
+      
+      if (isAlreadySelected) {
+        return 0;
+      }
+      
+      
+      clickedButton.classList.add('bg-bayern-blue');
+      clickedButton.classList.add('text-white');
+      clickedButton.classList.add('border-bayern-blue');
+      return parseInt(clickedButton.getAttribute('data-amount') || '0');
+    }
+    
+  
+    function updateDonationUI() {
+      if (selectedDonationAmount > 0) {
+        donateNowButton.textContent = `Donar $${selectedDonationAmount} Ahora`;
+        donateNowButton.classList.add('bg-bayern-red');
+        donateNowButton.classList.remove('bg-gray-400');
+        donateNowButton.classList.remove('cursor-not-allowed');
+      } else {
+        donateNowButton.textContent = 'Donar Ahora';
+        donateNowButton.classList.remove('bg-bayern-red');
+        donateNowButton.classList.add('bg-gray-400');
+        donateNowButton.classList.add('cursor-not-allowed');
+      }
+    }
+    
+  
+    function updateMembershipUI() {
+      if (selectedMembershipAmount > 0) {
+        becomeMemberButton.textContent = `Hacerme Miembro con $${selectedMembershipAmount}/mes`;
+        becomeMemberButton.classList.add('bg-bayern-blue');
+        becomeMemberButton.classList.remove('bg-gray-400');
+        becomeMemberButton.classList.remove('cursor-not-allowed');
+      } else {
+        becomeMemberButton.textContent = 'Hacerme Miembro';
+        becomeMemberButton.classList.remove('bg-bayern-blue');
+        becomeMemberButton.classList.add('bg-gray-400');
+        becomeMemberButton.classList.add('cursor-not-allowed');
+      }
+    }
+    
+    
+    function sendWhatsAppMessage(type, amount) {
+      if (amount <= 0) {
+        alert('Por favor selecciona un monto válido');
+        return;
+      }
+      
+      let message = '';
+      
+      if (type === 'donation') {
+        message = `Hola, quiero hacer una donación de $${amount} a Cubayern. Por favor, indicarme cómo transferir a la cuenta ${numeroCuenta}.`;
+      } else if (type === 'membership') {
+        message = `Hola, quiero hacerme miembro de Cubayern con una aportación mensual de $${amount}. Por favor, indicarme cómo transferir a la cuenta ${numeroCuenta}.`;
+      }
+      
+      
+      const encodedMessage = encodeURIComponent(message);
+      
+      
+      window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+    }
+    
+    donationButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        customAmountInput.classList.add('hidden');
+        otherAmountButton.classList.remove('bg-bayern-red');
+        otherAmountButton.classList.remove('text-white');
+        otherAmountButton.classList.remove('border-bayern-red');
+        
+
+        selectedDonationAmount = toggleDonationButtonSelection(button);        
+
+        updateDonationUI();
+      });
+    });
+    
+
+    membershipButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        selectedMembershipAmount = toggleMembershipButtonSelection(button);
+        
+        // Actualizar UI
+        updateMembershipUI();
+      });
+    });
+    
+
+    otherAmountButton.addEventListener('click', () => {
+
+      const isAlreadySelected = !customAmountInput.classList.contains('hidden');
+      
+      donationButtons.forEach(btn => {
+        btn.classList.remove('bg-bayern-red');
+        btn.classList.remove('text-white');
+        btn.classList.remove('border-bayern-red');
+        btn.classList.remove('bg-gray-50');
+      });
+      
+      if (isAlreadySelected) {
+
+        customAmountInput.classList.add('hidden');
+        otherAmountButton.classList.remove('bg-bayern-red');
+        otherAmountButton.classList.remove('text-white');
+        otherAmountButton.classList.remove('border-bayern-red');
+        selectedDonationAmount = 0;
+      } else {
+
+        otherAmountButton.classList.add('bg-bayern-red');
+        otherAmountButton.classList.add('text-white');
+        otherAmountButton.classList.add('border-bayern-red');
+        customAmountInput.classList.remove('hidden');
+        customAmountInput.value = '';
+        customAmountInput.focus();
+      }
+      
+
+      updateDonationUI();
+    });
+    
+    customAmountInput.addEventListener('input', () => {
+      selectedDonationAmount = parseInt(customAmountInput.value) || 0;
+      updateDonationUI();
+    });
+    
+    donateNowButton.addEventListener('click', () => {
+      sendWhatsAppMessage('donation', selectedDonationAmount);
+    });
+    
+    becomeMemberButton.addEventListener('click', () => {
+      sendWhatsAppMessage('membership', selectedMembershipAmount);
+    });
+    
+
+    updateDonationUI();
+    updateMembershipUI();
+  });
+</script>
