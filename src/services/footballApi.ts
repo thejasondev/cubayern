@@ -1,12 +1,17 @@
 import axios from 'axios';
 import type Match from '../interfaces/match.interface';
 
+
+// Determinar si estamos en el navegador o en el servidor
+const isBrowser = typeof window !== 'undefined';
+
 // Crear instancia de Axios con la configuración básica
 const footballApi = axios.create({
-  // Usamos nuestro proxy en lugar de la URL directa
-  baseURL: '/api/football',
-  // No necesitamos enviar el token aquí, ya lo hace el proxy
-  headers: {}
+  // En el servidor usamos la URL completa, en el cliente usamos el proxy
+  baseURL: isBrowser ? '/api/football' : 'https://api.football-data.org/v4',
+  headers: isBrowser 
+    ? {} // En el cliente el proxy agrega los headers
+    : { 'X-Auth-Token': import.meta.env.PUBLIC_FOOTBALL_API_KEY || '5446bcd190bd459bbdb672fd26543bc9' }
 });
 
 // Función para esperar un tiempo específico en ms
